@@ -116,10 +116,10 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
                             username:(NSString *)username
                             password:(NSString *)password
 {
-	return [[[SSHTunnel alloc] initWithHostname:hostname
+	return [[SSHTunnel alloc] initWithHostname:hostname
                                            port:port
                                        username:username
-                                       password:password] autorelease];
+                                       password:password];
 }
 
 + (int)localPort
@@ -200,38 +200,24 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 	
 	// close and release SSH output
 	[_sshErrHandle closeFile];
-	[_sshErrHandle release];
 	_sshErrHandle = nil;
 	
 	// terminate ssh
 	if ([_sshTask isRunning])
 	{
 		[_sshTask terminate];
-		[_sshTask release];
 		_sshTask = nil;
 	}
 	
 	// free properties by nil assignment
-	self.sshLaunchPath = nil;
-	self.hostname = nil;
-	self.username = nil;
-	self.password = nil;
-	self.identityFile = nil;
 	
 	// tunnels array
-	[_localForwards release];
-	_localForwards = nil;
 	
 	// reverse tunnels
-	[_remoteForwards release];
-	_remoteForwards = nil;
 	
 	// dynamic forwards (SOCKS proxy)
-	[_dynamicForwards release];
-	_dynamicForwards = nil;
 	
 	// lets be proper
-	[super dealloc];
 }
 
 - (NSString *)description
@@ -565,11 +551,9 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 	// reset connected status
 	_connected = NO;
 	
-	[_sshErrHandle release];
 	_sshErrHandle = nil;
 	
 	// cleanup ssh task structure
-	[_sshTask release];
 	_sshTask = nil;
 	
 	// post notification that tunnel terminated
@@ -645,7 +629,6 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 		}
 		
 		// free up memory
-		[_namedPipe release];
 		_namedPipe = nil;
 	}
 }
@@ -694,7 +677,6 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 	}
 	
 	// keep this around until dealloc
-	[_namedPipe retain];
 }
 
 - (void)_processSSHOutput:(NSData *)data
@@ -754,7 +736,6 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 			[_sshErrHandle waitForDataInBackgroundAndNotify];
 		}
 		
-		[log release];
 		log = nil;
 	}
 }
@@ -763,18 +744,18 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 
 - (void)_namedPipeThread:(id)anObject
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	_namedPipeHandle = [NSFileHandle fileHandleForWritingAtPath:_namedPipe];
+	@autoreleasepool {
+		_namedPipeHandle = [NSFileHandle fileHandleForWritingAtPath:_namedPipe];
+		
+		[_namedPipeHandle writeData:[self.password dataUsingEncoding:NSUTF8StringEncoding]];
+		[_namedPipeHandle closeFile];
+		
+		@synchronized (_namedPipe)
+		{
+			_namedPipeHandle = nil;
+		}
 	
-	[_namedPipeHandle writeData:[self.password dataUsingEncoding:NSUTF8StringEncoding]];
-	[_namedPipeHandle closeFile];
-	
-	@synchronized (_namedPipe)
-	{
-		_namedPipeHandle = nil;
-	}
-	
-	[pool drain];	
+	}	
 	[NSThread exit];
 }
 

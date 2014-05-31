@@ -38,32 +38,32 @@
 
 int main(int argc, const char *argv[])
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSError *error;
-	
-	// read password from pipe
-	NSDictionary *procEnv = [[NSProcessInfo processInfo] environment];
-	NSString *namedPipe = [procEnv valueForKey:kSSHTunnelNamedPipe];
-	NSFileHandle *namedPipeHandle = [NSFileHandle fileHandleForReadingAtPath:namedPipe];
-	NSData *pipeData = [namedPipeHandle readDataToEndOfFile];
-	[namedPipeHandle closeFile];
-	
-	// write password to ssh
-	NSFileHandle *stdOutHandle = [NSFileHandle fileHandleWithStandardOutput];
-	[stdOutHandle writeData:pipeData];
-	[stdOutHandle closeFile];
-	
-	// cleanup pipe file
-	if ([[NSFileManager defaultManager] isDeletableFileAtPath:namedPipe])
-	{
-		if (![[NSFileManager defaultManager] removeItemAtPath:namedPipe error:&error])
+	@autoreleasepool {
+		NSError *error;
+		
+		// read password from pipe
+		NSDictionary *procEnv = [[NSProcessInfo processInfo] environment];
+		NSString *namedPipe = [procEnv valueForKey:kSSHTunnelNamedPipe];
+		NSFileHandle *namedPipeHandle = [NSFileHandle fileHandleForReadingAtPath:namedPipe];
+		NSData *pipeData = [namedPipeHandle readDataToEndOfFile];
+		[namedPipeHandle closeFile];
+		
+		// write password to ssh
+		NSFileHandle *stdOutHandle = [NSFileHandle fileHandleWithStandardOutput];
+		[stdOutHandle writeData:pipeData];
+		[stdOutHandle closeFile];
+		
+		// cleanup pipe file
+		if ([[NSFileManager defaultManager] isDeletableFileAtPath:namedPipe])
 		{
-			NSLog(@"%@", error);
-			exit(EXIT_FAILURE);
+			if (![[NSFileManager defaultManager] removeItemAtPath:namedPipe error:&error])
+			{
+				NSLog(@"%@", error);
+				exit(EXIT_FAILURE);
+			}
 		}
-	}
 	
-	[pool drain];
+	}
 	
 	return 0;
 }

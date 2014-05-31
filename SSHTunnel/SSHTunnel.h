@@ -95,13 +95,13 @@ typedef NSInteger SSHTunnelTerminationReason;
 	SSHTunnelTerminationReason _terminationReason;
 }
 
-@property (readwrite,retain) NSString *sshLaunchPath;
+@property (readwrite,strong) NSString *sshLaunchPath;
 
-@property (readwrite,retain) NSString *hostname;
+@property (readwrite,strong) NSString *hostname;
 @property (readwrite,assign) NSUInteger port;
 
-@property (readwrite,retain) NSString *username;
-@property (readwrite,retain) NSString *password;
+@property (readwrite,strong) NSString *username;
+@property (readwrite,strong) NSString *password;
 
 @property (readwrite,assign) BOOL allocatesPseudoTTY;
 @property (readwrite,assign) BOOL allowsPasswordAuthentication;
@@ -112,7 +112,7 @@ typedef NSInteger SSHTunnelTerminationReason;
 @property (readwrite,assign) BOOL forceProtocol1;
 @property (readwrite,assign) BOOL forceProtocol2;
 @property (readwrite,assign) BOOL  gatewayPorts;
-@property (readwrite,retain) NSString *identityFile;
+@property (readwrite,strong) NSString *identityFile;
 @property (readwrite,assign) BOOL X11Forwarding;
 @property (readwrite,assign) BOOL X11TrustedForwarding;
 

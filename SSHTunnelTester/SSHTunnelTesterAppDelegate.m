@@ -30,11 +30,6 @@
 @synthesize forwardX11;
 @synthesize forwardTrustedX11;
 
--(void)dealloc
-{
-	[sshTunnel release];
-	[super dealloc];
-}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -130,7 +125,6 @@
 	@catch (NSException *e)
 	{
 		NSLog(@"launch: %@", [e reason]);
-		[sshTunnel release];
 		sshTunnel = nil;
 	}
 }
@@ -147,7 +141,6 @@
 	@catch (NSException *e)
 	{
 		NSLog(@"terminate: %@", [e reason]);
-		[sshTunnel release];
 		sshTunnel = nil;
 	}
 }
@@ -173,7 +166,6 @@
 							name:SSHTunnelDidTerminateNotification
 						      object:sshTunnel];
 	
-	[sshTunnel release];
 	sshTunnel = nil;
 }
 @end
