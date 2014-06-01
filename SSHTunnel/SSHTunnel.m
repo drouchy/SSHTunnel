@@ -419,7 +419,8 @@ static NSString *SSHTunnelNamedPipeFormat = @"/tmp/sshtunnel-%@-%08x";
 	
 	// need for SSH_ASKPASS stuff to work
 	[sshEnv addEntriesFromDictionary:[[NSProcessInfo processInfo] environment]];
-	[sshEnv setObject:[[NSBundle bundleForClass:[self class]] pathForResource:@"SSHTunnelHelper" ofType:nil]
+    id helper = [[NSBundle bundleForClass:[self class]] pathForResource:@"SSHTunnelHelper" ofType:nil] ;
+	[sshEnv setObject:helper
                forKey:@"SSH_ASKPASS"];
 	[sshEnv setObject:_namedPipe forKey:kSSHTunnelNamedPipe];
 

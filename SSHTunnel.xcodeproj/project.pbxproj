@@ -24,6 +24,7 @@
 		15C9813714152D9C00DCF796 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C9813514152D9C00DCF796 /* MainMenu.xib */; };
 		15C9813D14152DBB00DCF796 /* SSHTunnel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152F7B941412F1D60045CB4B /* SSHTunnel.framework */; };
 		15C9813F14152DC500DCF796 /* SSHTunnel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 152F7B941412F1D60045CB4B /* SSHTunnel.framework */; };
+		3BE8A9F2193B1203005AC4B7 /* SSHTunnel.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 3BE8A9F1193B1203005AC4B7 /* SSHTunnel.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		15C9813214152D9C00DCF796 /* SSHTunnelTesterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSHTunnelTesterAppDelegate.h; sourceTree = "<group>"; };
 		15C9813314152D9C00DCF796 /* SSHTunnelTesterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSHTunnelTesterAppDelegate.m; sourceTree = "<group>"; };
 		15C9813614152D9C00DCF796 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3BE8A9F1193B1203005AC4B7 /* SSHTunnel.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SSHTunnel.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		152F7B881412F1D60045CB4B = {
 			isa = PBXGroup;
 			children = (
+				3BE8A9F1193B1203005AC4B7 /* SSHTunnel.podspec */,
 				152F7B9D1412F1D60045CB4B /* SSHTunnel */,
 				152F7BB81412F33E0045CB4B /* SSHTunnelHelper */,
 				15C9812614152D9C00DCF796 /* SSHTunnelTester */,
@@ -331,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				152F7BC91412F4780045CB4B /* SSHTunnelHelper in Resources */,
+				3BE8A9F2193B1203005AC4B7 /* SSHTunnel.podspec in Resources */,
 				152F7BA21412F1D60045CB4B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
